@@ -96,7 +96,7 @@ def ($) ->
 
   $.extend $.fn,
     monoscroll: (options) ->
-      if this.length > 1
+      if @length > 1
         $.error "Can't use monoscroll on jQuery collection with more than one element."
       monoscroll this, options
       this

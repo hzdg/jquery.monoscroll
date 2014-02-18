@@ -61,11 +61,14 @@ def ($) ->
 
       @$frame.on 'scroll', @handleScroll
 
-      this
+      new Binding
+        target: @target
+        controller: this
 
     releaseTarget: ->
       return unless @target
       @$frame.off 'scroll', @handleScroll
+      @$el.css 'height', 'auto'
       @target.$el.css 'overflow', val if val = @target.info.oldOverflow
       @target = null
 
@@ -82,6 +85,14 @@ def ($) ->
     $.data el, key, (if value is undefined then UNDEF else value)
     value
 
+  class Binding
+    constructor: (opts) ->
+      @target = opts.target
+      @controller = opts.controller
+
+    release: ->
+      @controller.releaseTarget() if @controller.target?.el is @target.el
+
   monoscroll = (target, opts) ->
     $controller = $ opts?.controller ? 'body'
     controller = setDefault $controller, 'monoscroll.controller', ->
@@ -92,14 +103,28 @@ def ($) ->
     delete newOpts.controller
     delete newOpts.frame
     controller.setTarget target, newOpts
-    null
 
   $.extend $.fn,
-    monoscroll: (options) ->
+    monoscroll: (optionsOrMethod, args...) ->
       if @length > 1
         $.error "Can't use monoscroll on jQuery collection with more than one element."
-      monoscroll this, options
-      this
 
-  # This is a jQuery plugin so we don't want to return anything from our module.
-  null
+      plugin = @data 'monoscroll.instance'
+      method = optionsOrMethod if typeof optionsOrMethod is 'string'
+      options = optionsOrMethod ? {} unless method
+
+      unless plugin
+        if method
+          $.error "You can't call the monoscroll method '#{ method }' without
+                   first initializing the plugin by calling monoscroll() on the
+                   jQuery object."
+
+        plugin = monoscroll this, options
+        @data 'monoscroll.instance', plugin
+
+      if method
+        unless typeof plugin[method] is 'function'
+          $.error "Method '#{ method }' does not exist on jQuery.monoscroll"
+        return plugin[method] args...
+
+      plugin

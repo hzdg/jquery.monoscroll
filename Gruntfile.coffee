@@ -24,7 +24,7 @@ module.exports = (grunt) ->
         tasks: ['build']
     bump:
       options:
-        files: ['package.json', 'bower.json']
+        files: ['package.json', 'bower.json', 'monoscroll.jquery.json']
         commit: true
         commitFiles: ['-a']
         createTag: true

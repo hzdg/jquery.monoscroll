@@ -1,0 +1,28 @@
+{
+    "name": "monoscroll",
+    "title": "monoscroll",
+    "description": "One scrollbar to rule them all.",
+    "keywords": [
+        "scrollbar",
+        "scrolling"
+    ],
+    "version": "0.0.1",
+    "author": {
+        "name": "Matthew Dapena-Tretter",
+        "email": "m@tthewwithanm.com",
+        "url": "http://matthewwithanm.com"
+    },
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://github.com/hzdg/jquery.monoscroll/blob/master/LICENSE"
+        }
+    ],
+    "bugs": "https://github.com/monoscroll/jquery.monoscroll/issues",
+    "homepage": "https://github.com/monoscroll/jquery.monoscroll",
+    "docs": "https://github.com/monoscroll/jquery.monoscroll",
+    "download": "https://github.com/monoscroll/jquery.monoscroll/archive/master.zip",
+    "dependencies": {
+        "jquery": ">=1.5"
+    }
+}

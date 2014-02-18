@@ -1,0 +1,20 @@
+{
+  "name": "jquery.monoscroll",
+  "version": "0.0.1",
+  "authors": [
+    "Matthew Dapena-Tretter <m@tthewwithanm.com>"
+  ],
+  "description": "One scrollbar to rule them all.",
+  "main": "jquery.monoscroll.js",
+  "keywords": [
+    "scrollbar",
+    "scrolling"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/hzdg/jquery.monoscroll",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ]
+}

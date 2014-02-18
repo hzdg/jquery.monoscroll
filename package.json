@@ -1,0 +1,31 @@
+{
+  "name": "jquery.monoscroll",
+  "version": "0.0.1",
+  "description": "One scrollbar to rule them all.",
+  "main": "jquery.monoscroll.js",
+  "dependencies": {},
+  "devDependencies": {
+    "coffee-script": "~1.7.0",
+    "grunt": "~0.4.2",
+    "grunt-cli": "~0.1.13",
+    "grunt-contrib-coffee": "~0.10.1",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-bump": "0.0.13"
+  },
+  "scripts": {
+    "prepublish": "grunt build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hzdg/jquery.monoscroll.git"
+  },
+  "keywords": [
+    "javascript",
+    "browser"
+  ],
+  "author": "Matthew Dapena-Tretter <m@tthewwithanm.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hzdg/jquery.monoscroll/issues"
+  }
+}

@@ -1,6 +1,6 @@
 {
   "name": "jquery.monoscroll",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "One scrollbar to rule them all.",
   "main": "jquery.monoscroll.js",
   "dependencies": {},

@@ -19,13 +19,12 @@ def ($) ->
       @$frame = $ opts?.frame ? do =>
         if @$el[0].tagName is 'BODY' then window
         else @$el.parent()
-      @$frame.on 'scroll', @handleScroll
 
     handleScroll: (event) =>
       scrollTop = @$frame.scrollTop()
       normalizedScrollPos = scrollTop / (@$el.height() - @$frame.height())
-      scrollableDistance = @$target[0].scrollHeight - @$target.height()
-      @$target.scrollTop normalizedScrollPos * scrollableDistance
+      scrollableDistance = @target.el.scrollHeight - @target.$el.height()
+      @target.$el.scrollTop normalizedScrollPos * scrollableDistance
 
     # A context manager. Ignores scroll events dispatched during the scoped
     # callback. Usage:
@@ -39,23 +38,36 @@ def ($) ->
       @ignoreScroll = orig
 
     setTarget: (el, opts) ->
-# TODO: SET OVERFLOW HIDDEN. THEN UNSET WHEN UNSETTING TARGET. YELL YELL CAPS.
+      @releaseTarget()
+      $target = $ el
+      @target = $el: $target, el: $target[0], info: {}
+      if opts?.updateOverflow ? true
+        @target.info.oldOverflow = @target.$el.css 'overflow'
+        @target.$el.css 'overflow', 'hidden'
+
       # Set the controller content's height such that
       # `controller.height() / frame.height() = target.height() / targetFrame.height()`
-      @$target = $ el
-      targetScrollHeight = @$target[0].scrollHeight
-      targetFrameHeight = @$target.height()
+      targetScrollHeight = @target.el.scrollHeight
+      targetFrameHeight = @target.$el.height()
       frameHeight = @$frame.height()
       controllerScrollHeight = targetScrollHeight / targetFrameHeight * frameHeight
       @$el.height controllerScrollHeight
 
       # Update the controller's scroll position to match the target's.
       @ignoreScrolling =>
-        scrollableDistance = @$target[0].scrollHeight - @$target.height()
-        normalizedScrollPos = @$target.scrollTop() / scrollableDistance
+        scrollableDistance = @target.el.scrollHeight - @target.$el.height()
+        normalizedScrollPos = @target.$el.scrollTop() / scrollableDistance
         @$frame.scrollTop normalizedScrollPos * (frameHeight - controllerScrollHeight)
 
+      @$frame.on 'scroll', @handleScroll
+
       this
+
+    releaseTarget: ->
+      return unless @target
+      @$frame.off 'scroll', @handleScroll
+      @target.$el.css 'overflow', val if val = @target.info.oldOverflow
+      @target = null
 
   # A sentinel value used to represent `undefined` with `$.data`
   UNDEF = {}
